@@ -9,10 +9,13 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   Button,
+  Linking,
+  Alert,
 } from 'react-native';
 // eslint-disable-next-line import/no-unresolved
 import {RNCamera} from 'react-native-camera';
 import CameraScreen from './src/components/CameraScreen';
+import QRScanner from './src/components/QRScanner';
 
 const flashModeOrder = {
   off: 'on',
@@ -40,10 +43,25 @@ export default class App extends Component {
     };
   }
 
+  onSuccess = e => {
+    Alert.alert('Dank', 'Message', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel'),
+        style: 'cancel',
+      },
+      {cancelable: false},
+    ]);
+    // Linking.openURL(e.data).catch(err =>
+    //   console.error('An error occured', err),
+    // );
+  };
+
   toggleCamera = () => this.setState({renderCamera: !this.state.renderCamera});
+
   render() {
     if (this.state.renderCamera) {
-      return <CameraScreen toggle={this.toggleCamera} />;
+      return <QRScanner onRead={this.onSuccess} />;
     } else {
       return (
         <View>
