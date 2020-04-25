@@ -14,6 +14,7 @@ import {
   Platform,
   PermissionsAndroid,
 } from 'react-native';
+import {Button} from 'react-native-elements';
 
 import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import {RNCamera as Camera} from 'react-native-camera';
@@ -276,7 +277,9 @@ export default class QRScanner extends Component {
         </View> */}
         {this._renderCamera()}
         <View style={[styles.infoView, this.props.bottomViewStyle]}>
+          {/* <Button title="Toggle" onPress={this.props.toggle} /> */}
           {this._renderBottomContent()}
+          {/* <Text>Pepega</Text> */}
         </View>
       </View>
     );

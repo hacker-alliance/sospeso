@@ -13,25 +13,8 @@ import {
   Alert,
 } from 'react-native';
 // eslint-disable-next-line import/no-unresolved
-import {RNCamera} from 'react-native-camera';
-import CameraScreen from './src/components/CameraScreen';
+
 import QRScanner from './src/components/QRScanner';
-
-const flashModeOrder = {
-  off: 'on',
-  on: 'auto',
-  auto: 'torch',
-  torch: 'off',
-};
-
-const wbOrder = {
-  auto: 'sunny',
-  sunny: 'cloudy',
-  cloudy: 'shadow',
-  shadow: 'fluorescent',
-  fluorescent: 'incandescent',
-  incandescent: 'auto',
-};
 
 const landmarkSize = 2;
 
@@ -61,12 +44,19 @@ export default class App extends Component {
 
   render() {
     if (this.state.renderCamera) {
-      return <QRScanner onRead={this.onSuccess} />;
+      return (
+        <QRScanner
+          fadeIn={false}
+          onRead={this.onSuccess}
+          toggle={this.toggleCamera}
+          bottomContent={<Button title="Toggle" onPress={this.toggleCamera} />}
+        />
+      );
     } else {
       return (
         <View>
           <Text>Pepega</Text>
-          <Button title="Pepega" onPress={this.toggleCamera.bind(this)} />
+          <Button title="Push to show" onPress={this.toggleCamera.bind(this)} />
           {/* {this.state.renderCamera && <CameraScreen />} */}
         </View>
       );
