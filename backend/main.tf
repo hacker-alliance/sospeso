@@ -1,13 +1,17 @@
-resource "ibm_compute_vm_instance" "vm1" {
-  hostname             = "vm1"
-  domain               = "example.com"
-  os_reference_code    = "DEBIAN_8_64"
-  datacenter           = "dal09"
-  network_speed        = 10
-  hourly_billing       = true
-  private_network_only = false
-  cores                = 1
-  memory               = 1024
-  disks                = [25]
-  local_disk           = false
+data "archive_file" "hello-zip" {
+  type        = "zip"
+  source_dir  = "api/hello"
+  output_path = "zips/hello.zip"
 }
+
+
+resource "ibm_function_action" "nodehello" {
+  name = "hello"
+
+  exec {
+    kind = "nodejs:10"
+    code = filebase64("${data.archive_file.hello-zip.output_path}")
+  }
+  publish = true
+}
+

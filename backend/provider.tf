@@ -1,6 +1,7 @@
 variable "ibmcloud_api_key" {}
 variable "iaas_classic_username" {}
 variable "iaas_classic_api_key" {}
+variable "function_namespace" {}
 
 provider "ibm" {
   ibmcloud_api_key      = var.ibmcloud_api_key
@@ -8,4 +9,5 @@ provider "ibm" {
   region                = "us-south"
   iaas_classic_username = var.iaas_classic_username
   iaas_classic_api_key  = var.iaas_classic_api_key
+  function_namespace    = var.function_namespace
 }
