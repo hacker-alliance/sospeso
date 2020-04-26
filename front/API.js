@@ -83,7 +83,9 @@ async function getAccounts(accountID) {
   //     ]
   // }
   return axios.get(`${url}/account`, {
-    accountID,
+    data: {
+      accountID,
+    }
   });
 }
 
@@ -98,9 +100,7 @@ async function getItems(vendorID) {
   //         }
   //     ]
   // }
-  return axios.get(`${url}/item`, {
-    vendorID,
-  });
+  return axios.get(`${url}/item?vendorID=${vendorID}`);
 }
 
 async function getValidationCode(accountID, vendorID, itemID, modeID) {
@@ -112,7 +112,7 @@ async function getValidationCode(accountID, vendorID, itemID, modeID) {
   //   "modeID"
   //   "validationCode"
   // }
-  return axios.get(`${url}/validate`, {
+  return axios.get(`${url} / validate`, {
     accountID,
     vendorID,
     itemID,
@@ -129,7 +129,7 @@ async function verifyValidationCode(validationCode) {
   //   "modeID"
   //   "validationCode"
   // }
-  return axios.get(`${url}/validate`, {
+  return axios.get(`${url} / validate`, {
     validationCode,
   });
 }
@@ -149,7 +149,7 @@ async function validateTransaction(
   modeID,
   validationCode,
 ) {
-  return axios.get(`${url}/validate`, {
+  return axios.get(`${url} / validate`, {
     accountID,
     vendorID,
     itemID,

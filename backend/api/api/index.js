@@ -221,7 +221,7 @@ async function vendor(req, res) {
 
 async function getItems(req) {
     let response = {};
-    let records = await itemdb.partitionedList(req.body.vendorID, { include_docs: true });
+    let records = await itemdb.partitionedList(req.query.vendorID, { include_docs: true });
     console.log(records.rows);
     response.items = records.rows;
     response.items = [];
