@@ -27,6 +27,26 @@ resource "ibm_is_security_group_rule" "ingress_ssh_all" {
   }
 }
 
+# allow all outgoing traffic
+resource "ibm_is_security_group_rule" "egress" {
+  group     = ibm_is_security_group.sg1.id
+  direction = "outbound"
+  remote    = "0.0.0.0/0"
+
+}
+
+# allow all incoming network traffic on port 80
+resource "ibm_is_security_group_rule" "ingress_http_all" {
+  group     = ibm_is_security_group.sg1.id
+  direction = "inbound"
+  remote    = "0.0.0.0/0"
+
+  tcp {
+    port_min = 80
+    port_max = 80
+  }
+}
+
 resource "ibm_is_subnet" "subnet1" {
   name                     = "${local.BASENAME}-subnet1"
   vpc                      = ibm_is_vpc.vpc.id

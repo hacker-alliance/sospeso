@@ -289,10 +289,10 @@ async function validate(req, res) {
     let responsePromise = {};
     switch (req.method) {
         case 'GET':
-            responsePromise = await getValidation(req);
+            responsePromise = getValidation(req);
             break;
         case 'POST':
-            responsePromise = await postValidation(req);
+            responsePromise = postValidation(req);
             break;
     }
 
@@ -309,6 +309,6 @@ app.use('/item', item);
 app.use('/validate', validate);
 
 app.use(defaultRoute);
-const port = 3000;
+const port = 80;
 
 app.listen(port, () => console.log(`API listening at http://localhost:${port}`))
