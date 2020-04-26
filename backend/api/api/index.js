@@ -6,7 +6,6 @@ const cloudant = Cloudant(process.env.cloudant_url);
 const authdb = cloudant.db.use('authentication');
 const vendordb = cloudant.db.use('vendor');
 const itemdb = cloudant.db.use('item');
-
 let app = express();
 
 app.use(express.json()); // for parsing application/json
@@ -41,6 +40,7 @@ async function getAccount(req) {
     response.accountID = record._id;
     response.accountName = record.accountName;
     response.accountType = record.accountType;
+    response.helped = record.helped;
     console.log(response);
     return response;
 }
@@ -51,7 +51,8 @@ async function createAccount(req) {
     let record = await authdb.insert({
         _id: req.body.accountID,
         accountName: req.body.accountName,
-        accountType: req.body.accountType
+        accountType: req.body.accountType,
+        helped: 0
     });
     console.log(record);
     response.accountID = record.id;
@@ -62,13 +63,13 @@ async function createAccount(req) {
 
 async function updateAccount(req) {
     let response = {};
-    let findRecord = await authdb.get(req.body.accountID);
-    console.log(findRecord);
-    findRecord.accountName = req.body.accountName;
+    let findAccount = await authdb.get(req.body.accountID);
+    console.log(findAccount);
+    findAccount.accountName = req.body.accountName;
 
-    let record = await authdb.insert(findRecord);
+    let record = await authdb.insert(findAccount);
     response.accountID = record.id;
-    response.accountName = findRecord.accountName
+    response.accountName = findAccount.accountName
     console.log(record);
     return response;
 }
@@ -163,13 +164,13 @@ async function createVendor(req) {
 
 async function updateVendor(req) {
     let response = {};
-    let findRecord = await vendordb.get(req.body.vendorID);
-    console.log(findRecord);
-    findRecord.vendorName = req.body.vendorName;
+    let findVendor = await vendordb.get(req.body.vendorID);
+    console.log(findVendor);
+    findVendor.vendorName = req.body.vendorName;
 
-    let record = await vendordb.insert(findRecord);
+    let record = await vendordb.insert(findVendor);
     response.vendorID = record.id;
-    response.vendorName = findRecord.vendorName
+    response.vendorName = findVendor.vendorName
     console.log(record);
     return response;
 }
@@ -255,13 +256,13 @@ async function createItem(req) {
 
 async function updateItem(req) {
     let response = {};
-    let findRecord = await authdb.get(req.body.itemID);
-    console.log(findRecord);
-    findRecord.itemName = req.body.itemName;
+    let findItem = await itemdb.get(req.body.itemID);
+    console.log(findItem);
+    findItem.itemName = req.body.itemName;
 
-    let record = await authdb.insert(findRecord);
+    let record = await itemdb.insert(findItem);
     response.itemID = record.id;
-    response.itemName = findRecord.itemName
+    response.itemName = findItem.itemName
     console.log(record);
     return response;
 }
@@ -305,23 +306,97 @@ async function item(req, res) {
     res.send(response);
 }
 
-
-async function getValidation(req) {
-
+function encode(data) {
+    data = `${data.accountID}|${data.vendorID}|${data.itemID}|${data.modeID}`
+    let buffer = new Buffer(data);
+    return buffer.toString('base64');
 }
 
-async function postValidation(req) {
+function decode(code) {
+    let buffer = new Buffer(code, 'base64');
+    let decoded = buffer.toString('ascii').split('|');
+    console.log(decoded);
+    let data = {}
+    data.accountID = decoded[0];
+    data.vendorID = decoded[1];
+    data.itemID = decoded[2];
+    data.modeID = decoded[3];
+    return data;
+}
+async function generate(req) {
+    let response = {};
+    response.accountID = req.body.accountID;
+    response.vendorID = req.body.vendorID;
+    response.itemID = req.body.itemID;
+    response.modeID = req.body.modeID;
+    let data = response;
+    response.validationCode = encode(data);
+    return response;
+}
 
+async function verify(req) {
+    let response = {};
+    let data = decode(req.body.validationCode);
+
+    response.accountID = data.accountID;
+    response.vendorID = data.vendorID;
+    response.itemID = data.itemID;
+    response.modeID = data.modeID;
+    response.validationCode = req.body.validationCode;
+    return response;
+}
+
+async function apply(req) {
+    let response = {};
+    if (req.body.modeID === 'donate') {
+        let findAccount = await authdb.get(req.body.accountID);
+        console.log(findAccount);
+        findAccount.helped = findAccount.helped + 1;
+
+        let record = await authdb.insert(findAccount);
+        console.log(record);
+        response.accountID = record.id;
+        response.accountName = findAccount.accountName;
+        response.helped = findAccount.helped;
+
+        let findItem = await itemdb.get(`${req.body.vendorID}:${req.body.itemID}`);
+        console.log(findItem);
+        findItem.quantityAvailable = findItem.quantityAvailable + 1;
+
+        record = await itemdb.insert(findItem);
+        console.log(record);
+        response.itemID = findItem.itemID;
+        response.vendorID = findItem.vendorID;
+        response.quantityAvailable = findItem.quantityAvailable;
+    }
+    else if (req.body.modeID === 'redeem') {
+        let findItem = await itemdb.get(`${req.body.vendorID}:${req.body.itemID}`);
+        console.log(findItem);
+        findItem.quantityAvailable = findItem.quantityAvailable - 1;
+
+        let record = await itemdb.insert(findItem);
+        console.log(record);
+        response.itemID = findItem.itemID;
+        response.vendorID = findItem.vendorID;
+        response.quantityAvailable = findItem.quantityAvailable;
+    }
+    return response;
 }
 
 async function validate(req, res) {
     let responsePromise = {};
     switch (req.method) {
         case 'GET':
-            responsePromise = getValidation(req);
+            if (req.body.validationCode) {
+                responsePromise = verify(req);
+            }
+            else {
+                responsePromise = generate(req);
+            }
+
             break;
         case 'POST':
-            responsePromise = postValidation(req);
+            responsePromise = apply(req);
             break;
     }
 
