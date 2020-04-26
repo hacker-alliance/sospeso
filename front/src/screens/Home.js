@@ -9,9 +9,17 @@ import {
   Dimensions,
   Button,
   Linking,
+  Image,
+  ScrollView,
   Alert,
 } from 'react-native';
-import {Redirect} from 'react-router-native';
+import Navbar from '../components/Navbar';
+import Item from '../components/Item';
+
+import coffee1 from '../images/coffee1.jpg';
+import coffee2 from '../images/coffee2.jpg';
+import coffee3 from '../images/coffee3.jpg';
+import coffee4 from '../images/coffee4.jpg';
 
 import QRScanner from '../components/QRScanner';
 
@@ -39,8 +47,6 @@ export default class Home extends Component {
 
   toggleCamera = () => this.setState({renderCamera: !this.state.renderCamera});
 
-  goto = location => <Redirect to={'/' + location} />;
-
   render() {
     if (this.state.renderCamera) {
       return (
@@ -53,18 +59,46 @@ export default class Home extends Component {
       );
     } else {
       return (
-        <View>
+        <ScrollView style={{flex: 1, height: '100%'}}>
           <Text>Pepega</Text>
           <Button title="Push to show" onPress={this.toggleCamera.bind(this)} />
-          <Button title="Gotopay" onPress={() => <Redirect to="/pay" />} />
-          <Button title="Gotologin" onPress={() => <Redirect to="/login" />} />
-          <Button
-            title="Gotoregister"
-            onPress={() => <Redirect to="/register" />}
-          />
 
-          {/* {this.state.renderCamera && <CameraScreen />} */}
-        </View>
+          {/* <Button
+            title="pepega"
+            onPress={() =>
+              this.props.navigation.navigate('Login', {name: 'Login'})
+            }
+          /> */}
+
+          <Item image={coffee1} />
+          <Item image={coffee1} />
+          <Item image={coffee1} />
+          <Item image={coffee1} />
+          <Item image={coffee1} />
+          <Item image={coffee1} />
+          <Item image={coffee1} />
+          <Item image={coffee1} />
+          <Item image={coffee1} />
+          <Item image={coffee1} />
+          <Item image={coffee1} />
+          <Item image={coffee1} />
+          <Item image={coffee1} />
+          <Item image={coffee1} />
+
+          {/* <Item image={coffee2} />
+          <Item image={coffee3} />
+          <Item image={coffee4} /> */}
+
+          {/* <Image source={coffee1} />
+            <Image source={coffee1} />
+            <Image source={coffee1} />
+            <Image source={coffee1} /> */}
+          {/* <Item image={coffee1} /> */}
+          {/* <Item image={coffee2} /> */}
+          {/* <Item image={coffee3} />
+          <Item image={coffee4} /> */}
+          {/* <Navbar goto={loc => this.props.navigation.navigate(loc)} /> */}
+        </ScrollView>
       );
     }
   }
