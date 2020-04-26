@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -14,7 +14,7 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import {SearchBar} from 'react-native-elements';
+import { SearchBar } from 'react-native-elements';
 import Item from '../components/Item';
 import Icon from 'react-native-ionicons';
 
@@ -25,13 +25,13 @@ import coffee4 from '../images/coffee4.jpg';
 
 import QRScanner from '../components/QRScanner';
 import axios from 'axios';
-import {api} from '../../API';
+import { api } from '../../API';
 
 const data = [
-  {itemid: 1, itemName: 'coffee1', image: coffee1, quantityAvailable: 4},
-  {itemid: 2, itemName: 'coffee2', image: coffee2, quantityAvailable: 9},
-  {itemid: 3, itemName: 'coffee3', image: coffee3, quantityAvailable: 7},
-  {itemid: 4, itemName: 'coffee4', image: coffee4, quantityAvailable: 12},
+  { itemid: 1, itemName: 'coffee1', image: coffee1, quantityAvailable: 4 },
+  { itemid: 2, itemName: 'coffee2', image: coffee2, quantityAvailable: 9 },
+  { itemid: 3, itemName: 'coffee3', image: coffee3, quantityAvailable: 7 },
+  { itemid: 4, itemName: 'coffee4', image: coffee4, quantityAvailable: 12 },
 ];
 
 export default class Home extends Component {
@@ -48,10 +48,12 @@ export default class Home extends Component {
     api.getItems('titanic').then(res => {
       let vendors = [];
       let idx = 0;
-      for (vend in res.data) {
-        vendors.push({vendorID: vend.vendorID, vendorName: vend.vendorName});
+      console.log(res.data.items);
+      for (vend of res.data.items) {
+        vendors.push({ vendorID: vend.vendorID, itemID: vend.itemID });
       }
-      this.setState({vendors: vendors});
+      console.log(vendors);
+      this.setState({ vendors: vendors });
     });
   }
 
@@ -63,7 +65,7 @@ export default class Home extends Component {
         onPress: () => console.log('Cancel'),
         style: 'cancel',
       },
-      {cancelable: false},
+      { cancelable: false },
     ]);
     // else Alert.alert('pepega');
     // Linking.openURL(e.data).catch(err =>
@@ -71,7 +73,7 @@ export default class Home extends Component {
     // );
   };
 
-  toggleCamera = () => this.setState({renderCamera: !this.state.renderCamera});
+  toggleCamera = () => this.setState({ renderCamera: !this.state.renderCamera });
 
   render() {
     if (this.state.renderCamera) {
@@ -85,7 +87,7 @@ export default class Home extends Component {
       );
     } else {
       return (
-        <ScrollView style={{flex: 1, height: '100%'}}>
+        <ScrollView style={{ flex: 1, height: '100%' }}>
           <View
             style={{
               height: '4%',
@@ -128,7 +130,7 @@ export default class Home extends Component {
 
           {this.state.vendors.map((d, idx) => {
             console.log(d);
-            return <Text>{d.vendorname}</Text>;
+            return <Text>{d.vendorID}</Text>;
             // if (idx < this.state.vendors.length) {
             //   // console.log(this.state.vendors[idx]);
             // }
