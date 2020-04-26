@@ -11,7 +11,7 @@ async function login(accountID, accountPassword) {
   //     "accountType"
   //     "helped"
   // }
-  return axios.post(`${url}/authenticate`, {accountID});
+  return axios.post(`${url}/authenticate`, { accountID });
 }
 
 async function createAccount(accountID, accountName, accountType) {
@@ -21,7 +21,7 @@ async function createAccount(accountID, accountName, accountType) {
   //     "accountType"
   //     "helped"
   // }
-  return axios.post(`${url}/account`, {accountID, accountName, accountType});
+  return axios.post(`${url}/account`, { accountID, accountName, accountType });
 }
 
 async function getVendors() {
@@ -104,6 +104,14 @@ async function getItems(vendorID) {
 }
 
 async function getValidationCode(accountID, vendorID, itemID, modeID) {
+  // returns promise to object
+  // {
+  //   "accountID"
+  //   "vendorID"
+  //   "itemID"
+  //   "modeID"
+  //   "validationCode"
+  // }
   return axios.get(`${url}/validate`, {
     accountID,
     vendorID,
@@ -113,11 +121,27 @@ async function getValidationCode(accountID, vendorID, itemID, modeID) {
 }
 
 async function verifyValidationCode(validationCode) {
+  // returns promise to object
+  // {
+  //   "accountID"
+  //   "vendorID"
+  //   "itemID"
+  //   "modeID"
+  //   "validationCode"
+  // }
   return axios.get(`${url}/validate`, {
     validationCode,
   });
 }
 
+// returns promise to object
+// {
+//   "accountID"
+//   "helped"
+//   "itemID"
+//   "vendorID"
+//   "quantityAvailable"
+// }
 async function validateTransaction(
   accountID,
   vendorID,
@@ -147,4 +171,4 @@ api.getValidationCode = getValidationCode;
 api.verifyValidationCode = verifyValidationCode;
 api.validateTransaction = validateTransaction;
 
-export {api};
+export { api };
