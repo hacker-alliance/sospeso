@@ -132,7 +132,7 @@ export default class Home extends Component {
             }
             return (
               <Item
-                key={this.state.ve}
+                key={idx}
                 name={d.name}
                 image={d.image}
                 itemid={d.itemId}
