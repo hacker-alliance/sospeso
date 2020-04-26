@@ -248,7 +248,7 @@ export default class QRScanner extends Component {
       if (this.props.fadeIn) {
         return (
           <Animated.View
-            useNativeDriver={true}
+            // useNativeDriver={true}
             style={{
               opacity: this.state.fadeInOpacity,
               backgroundColor: 'transparent',

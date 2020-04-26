@@ -25,7 +25,7 @@ import coffee4 from '../images/coffee4.jpg';
 
 import QRScanner from '../components/QRScanner';
 import axios from 'axios';
-import api from '../../API';
+import {api} from '../../API';
 
 const data = [
   {itemid: 1, itemName: 'coffee1', image: coffee1, quantityAvailable: 4},
@@ -40,20 +40,31 @@ export default class Home extends Component {
     this.state = {
       renderCamera: false,
       search: '',
+      vendorID: '',
+      vendorName: '',
     };
   }
 
+  componentDidMount() {
+    api.getItems('titanic').then(res => {
+      this.setState({
+        vendorID: res.data.vendorID,
+        vendorName: res.data.vendorName,
+      });
+    });
+  }
+
   onSuccess = e => {
-    if (api)
-      Alert.alert('Dank', 'Message', [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel'),
-          style: 'cancel',
-        },
-        {cancelable: false},
-      ]);
-    else Alert.alert('pepega');
+    // if (api)
+    Alert.alert('Dank', 'Message', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel'),
+        style: 'cancel',
+      },
+      {cancelable: false},
+    ]);
+    // else Alert.alert('pepega');
     // Linking.openURL(e.data).catch(err =>
     //   console.error('An error occured', err),
     // );
@@ -111,6 +122,8 @@ export default class Home extends Component {
               }}
             />
           </View>
+
+          <Text>{this.state.vendorName}</Text>
 
           {data.map((d, idx) => (
             <Item
