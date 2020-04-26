@@ -71,7 +71,7 @@ export default class Pay extends Component {
               opacity: 0.8,
               borderRadius: 5,
             }}
-            source={coffee1}
+            source={this.props.route.params.image}
           />
         </View>
         <View>
@@ -82,7 +82,7 @@ export default class Pay extends Component {
               marginLeft: '16%',
               marginTop: '3%',
             }}>
-            Buy | Coffee x 2
+            Buy | {this.props.route.params.itemName} x 2
           </Text>
           <Text
             style={{marginLeft: '16%', marginTop: '3%', fontWeight: 'bold'}}>

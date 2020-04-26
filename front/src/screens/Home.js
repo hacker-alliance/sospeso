@@ -70,9 +70,6 @@ export default class Home extends Component {
     } else {
       return (
         <ScrollView style={{flex: 1, height: '100%'}}>
-          {/* <Text>Pepega</Text>
-          <Button title="Push to show" onPress={this.toggleCamera.bind(this)} /> */}
-
           <View
             style={{
               height: '4%',
@@ -84,7 +81,12 @@ export default class Home extends Component {
                 left: '87%',
                 top: '35%',
               }}>
-              <Icon name="person-outline" color="#ffbe42" size={35} />
+              <Icon
+                name="person-outline"
+                color="#ffbe42"
+                size={35}
+                onPress={() => this.props.navigation.navigate('Profile')}
+              />
             </View>
           </View>
 
@@ -94,13 +96,14 @@ export default class Home extends Component {
               justifyContent: 'center',
               marginLeft: '5%',
               marginRight: '5%',
-              height: '3.9%',
+              height: '9%',
+              marginTop: '8%',
             }}>
             <TextInput
               style={{
                 backgroundColor: '#aeaeae',
                 borderRadius: 100,
-                height: '70%',
+                height: '80%',
               }}
             />
           </View>
@@ -114,29 +117,6 @@ export default class Home extends Component {
               goto={loc => this.props.navigation.navigate(loc, d)}
             />
           ))}
-          {/* <Item image={coffee1} />
-          <Item image={coffee2} />
-          <Item image={coffee3} />
-          <Item image={coffee4} />
-          <Item image={coffee1} />
-          <Item image={coffee2} />
-          <Item image={coffee3} />
-          <Item image={coffee4} />
-          <Item image={coffee2} />
-          <Item image={coffee3} />
-          <Item image={coffee4} /> */}
-          {/* <Item image={coffee2} />
-          <Item image={coffee3} />
-          <Item image={coffee4} /> */}
-          {/* <Image source={coffee1} />
-            <Image source={coffee1} />
-            <Image source={coffee1} />
-            <Image source={coffee1} /> */}
-          {/* <Item image={coffee1} /> */}
-          {/* <Item image={coffee2} /> */}
-          {/* <Item image={coffee3} />
-          <Item image={coffee4} /> */}
-          {/* <Navbar goto={loc => this.props.navigation.navigate(loc)} /> */}
         </ScrollView>
       );
     }

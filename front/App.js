@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {NavigationContainer, TabActions} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-ionicons';
 
 import Home from './src/screens/Home';
 import Login from './src/screens/Login';
@@ -17,13 +18,47 @@ const Tab = createBottomTabNavigator();
 export default class App extends Component {
   render() {
     const HomePageTabs = () => (
-      <Tab.Navigator>
+      <Tab.Navigator
+        screenOptions={({route}) => ({
+          tabBarIcon: ({focused, color, size}) => {
+            let iconName;
+
+            if (route.name === 'Home') {
+              iconName = 'home-outline';
+            } else if (route.name === 'Notifications') {
+              iconName = 'wallet-outline';
+            } else if (route.name === 'Bookmarks') {
+              iconName = 'bookmark-outline';
+            } else if (route.name == 'Profile') {
+              iconName = 'person-outline';
+            }
+            // You can return any component that you like here!
+            return <Icon name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions={{
+          showLabel: false,
+          activeTintColor: '#ffbe42',
+          inactiveTintColor: 'gray',
+        }}>
         <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Notifications" component={Home} />
+        <Tab.Screen name="Bookmarks" component={Home} />
         {/* <Tab.Screen name="Dank" component={Login} /> */}
         {/* <Tab.Screen name="Memes" component={Register} /> */}
-        <Tab.Screen name="Pay" component={Pay} />
+        {/* <Tab.Screen name="Pay" component={Pay} /> */}
+        <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
     );
+
+    const PayTabs = () => {
+      return (
+        <Tab.Navigator initialRouteName="Pay">
+          <Tab.Screen name="Home" component={HomePageTabs} />
+          <Tab.Screen name="Pay" component={Pay} />
+        </Tab.Navigator>
+      );
+    };
 
     return (
       <NavigationContainer>
