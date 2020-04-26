@@ -126,19 +126,21 @@ export default class Home extends Component {
 
           {/* <Text>{this.state.vendorName}</Text> */}
 
-          {data.map((d, idx) => {
-            if (idx < this.state.vendors.length) {
-              console.log(this.state.vendors[idx]);
-            }
-            return (
-              <Item
-                key={idx}
-                name={d.name}
-                image={d.image}
-                itemid={d.itemId}
-                goto={loc => this.props.navigation.navigate(loc, d)}
-              />
-            );
+          {this.state.vendors.map((d, idx) => {
+            console.log(d);
+            return <Text>{d.vendorname}</Text>;
+            // if (idx < this.state.vendors.length) {
+            //   // console.log(this.state.vendors[idx]);
+            // }
+            // return (
+            //   <Item
+            //     key={idx}
+            //     name={d.name}
+            //     image={d.image}
+            //     itemid={d.itemId}
+            //     goto={loc => this.props.navigation.navigate(loc, d)}
+            //   />
+            // );
           })}
         </ScrollView>
       );
