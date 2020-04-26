@@ -35,4 +35,8 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+# Dependency directories
+node_modules/
 zips
+
+*.env
