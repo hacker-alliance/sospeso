@@ -199,31 +199,74 @@ async function vendor(req, res) {
 
 
 
-async function getItems() {
-
+async function getItems(req) {
+    let response = {};
+    let records = await itemdb.partitionedList(req.body.vendorID, { include_docs: true });
+    console.log(records.rows);
+    response.items = records.rows;
+    return response;
 }
-async function getItem(req) {
 
-}
 async function createItem(req) {
+    let response = {};
 
+    let record = await itemdb.insert({
+        _id: `${req.body.vendorID}:${req.body.itemID}`,
+        itemID: req.body.itemID,
+        vendorID: req.body.vendorID,
+        itemName: req.body.itemName,
+        quantityAvailable: 0
+    });
+    console.log(record);
+    response.itemID = record._id;
+    response.itemName = record.itemName;
+    response.quantityAvailable = record.quantityAvailable;
+    return response;
 }
 
 async function updateItem(req) {
+    let response = {};
+    let findRecord = await authdb.get(req.body.itemID);
+    console.log(findRecord);
+    findRecord.itemName = req.body.itemName;
 
+    let record = await authdb.insert(findRecord);
+    response.itemID = record.id;
+    response.itemName = findRecord.itemName
+    console.log(record);
+    return response;
 }
 
 async function deleteItem(req) {
+    let docID = `${req.body.vendorID}:${req.body.itemID}`;
+    let response = {};
+    let findRecord = await itemdb.get(docID);
+    console.log(findRecord);
+    let record = await itemdb.destroy(
+        docID,
+        findRecord._rev
+    );
 
+    console.log(record);
+    response.vendorID = req.body.vendorID;
+    response.itemID = req.body.itemID;
+    return response;
 }
+
 async function item(req, res) {
     let responsePromise = {};
     switch (req.method) {
         case 'GET':
-            responsePromise = await getItems();
+            responsePromise = getItems(req);
             break;
         case 'POST':
-            responsePromise = await createItem(req);
+            responsePromise = createItem(req);
+            break;
+        case 'PUT':
+            responsePromise = updateItem(req);
+            break;
+        case 'DELETE':
+            responsePromise = deleteItem(req);
             break;
     }
 
