@@ -1,0 +1,20 @@
+{
+  "name": "github.com/instamobile/react-native-login-screen-android-ios:login-screen",
+  "version": "0.0.0",
+  "description": "instamobile/react-native-login-screen-android-ios @ Apr 14, 2019",
+  "author": null,
+  "private": true,
+  "main": "node_modules/expo/AppEntry.js",
+  "devDependencies": {
+    "babel-preset-expo": "^7.0.0"
+  },
+  "dependencies": {
+    "expo": "^26.0.0",
+    "react": "16.3.0-alpha.1",
+    "react-native": ">=0.44.0",
+    "prop-types": "15.x.x",
+    "@expo/vector-icons": "latest",
+    "react-native-fbsdk": "^0.7.0",
+    "react-native-elements": "^0.19.1"
+  }
+}
