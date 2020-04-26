@@ -57,6 +57,7 @@ async function createAccount(req) {
     console.log(record);
     response.accountID = record.id;
     response.accountName = req.body.accountName;
+    response.helped = req.body.helped;
     response.accountType = req.body.accountType;
     return response;
 }
