@@ -1,16 +1,80 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Button, Alert} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Slider,
+  TouchableWithoutFeedback,
+  Dimensions,
+  Button,
+  Linking,
+  Image,
+  ScrollView,
+  TextInput,
+  Alert,
+} from 'react-native';
+import {SearchBar} from 'react-native-elements';
+import Item from '../components/Item';
+import Icon from 'react-native-ionicons';
+import QRScanner from '../components/QRScanner';
+
+import coffee1 from '../images/coffee1.jpg';
+import coffee2 from '../images/coffee2.jpg';
+import coffee3 from '../images/coffee3.jpg';
+import coffee4 from '../images/coffee4.jpg';
 
 export default class Pay extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      renderCamera: false,
+      search: '',
+    };
   }
 
   render() {
     return (
       <View>
-        <Text>So anyways, I started blasting</Text>
-        <Text>Payment page</Text>
+        {/* <Text>Pepega</Text>
+          <Button title="Push to show" onPress={this.toggleCamera.bind(this)} /> */}
+
+        <View style={{height: '10%'}}>
+          <View
+            style={{
+              // backgroundColor: 'red',
+              width: '10%',
+              left: '87%',
+              top: '70%',
+            }}>
+            <Icon name="person-outline" color="#ffbe42" size={35} />
+          </View>
+        </View>
+
+        <View
+          style={{
+            height: '42%',
+            width: '120%',
+            // height: '15%',
+            // flex: 1,
+            // backgroundColor: 'red',
+            flexDirection: 'row',
+            marginTop: '8%',
+            borderColor: 'black',
+          }}>
+          <Image
+            style={{
+              width: '85%',
+              height: '100%',
+              opacity: 0.8,
+              borderRadius: 5,
+            }}
+            source={coffee1}
+          />
+        </View>
+        <View style={{backgroundColor: 'red'}}>
+          <QRScanner />
+        </View>
       </View>
     );
   }

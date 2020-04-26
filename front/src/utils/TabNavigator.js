@@ -19,6 +19,12 @@ const TabNavigator = ({navigation}) => {
       <Tab.Screen name="Register" component={Register} />
       <Tab.Screen name="Pay" component={Pay} />
     </Tab.Navigator>
+    //   <Tab.Navigator>
+    //   <Tab.Screen name="Home" component={Home} />
+    //   <Tab.Screen name="Login" component={Login} />
+    //   <Tab.Screen name="Register" component={Register} />
+    //   <Tab.Screen name="Pay" component={Pay} />
+    // </Tab.Navigator>
   );
 };
 

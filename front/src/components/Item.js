@@ -34,8 +34,8 @@ export default class Item extends Component {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Button title="pepega" buttonStyle={styles.button1} />
-            <Button title="pepega" buttonStyle={styles.button2} />
+            <Button title="Redeem" buttonStyle={styles.button1} />
+            <Button title="Purchase" buttonStyle={styles.button2} />
           </View>
         )}
       </TouchableOpacity>

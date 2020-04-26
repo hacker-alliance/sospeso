@@ -248,6 +248,7 @@ export default class QRScanner extends Component {
       if (this.props.fadeIn) {
         return (
           <Animated.View
+            useNativeDriver={true}
             style={{
               opacity: this.state.fadeInOpacity,
               backgroundColor: 'transparent',
@@ -303,7 +304,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'transparent',
     height: Dimensions.get('window').width,
-    width: Dimensions.get('window').width,
+    width: Dimensions.get('window').width / 2,
   },
 
   rectangleContainer: {
