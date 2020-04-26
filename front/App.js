@@ -32,7 +32,6 @@ export default class App extends Component {
             } else if (route.name == 'Profile') {
               iconName = 'person-outline';
             }
-            // You can return any component that you like here!
             return <Icon name={iconName} size={size} color={color} />;
           },
         })}
@@ -44,9 +43,6 @@ export default class App extends Component {
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Notifications" component={Home} />
         <Tab.Screen name="Bookmarks" component={Home} />
-        {/* <Tab.Screen name="Dank" component={Login} /> */}
-        {/* <Tab.Screen name="Memes" component={Register} /> */}
-        {/* <Tab.Screen name="Pay" component={Pay} /> */}
         <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
     );

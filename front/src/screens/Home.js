@@ -24,6 +24,8 @@ import coffee3 from '../images/coffee3.jpg';
 import coffee4 from '../images/coffee4.jpg';
 
 import QRScanner from '../components/QRScanner';
+import axios from 'axios';
+import api from '../../API';
 
 const data = [
   {itemid: 1, itemName: 'coffee1', image: coffee1, quantityAvailable: 4},
@@ -42,14 +44,16 @@ export default class Home extends Component {
   }
 
   onSuccess = e => {
-    Alert.alert('Dank', 'Message', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel'),
-        style: 'cancel',
-      },
-      {cancelable: false},
-    ]);
+    if (api)
+      Alert.alert('Dank', 'Message', [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel'),
+          style: 'cancel',
+        },
+        {cancelable: false},
+      ]);
+    else Alert.alert('pepega');
     // Linking.openURL(e.data).catch(err =>
     //   console.error('An error occured', err),
     // );

@@ -1,146 +1,140 @@
-import axios from 'axios';
+// require('axios');
+const axios = require('axios');
 
 const url = 'https://sospeso.hackeralliance.org';
 
 // Also use to Get Account Info
 async function login(accountID, accountPassword) {
-    // returns promise to object
-    // {
-    //     "accountID"
-    //     "accountType"
-    //     "helped"
-    // }
-    return axios.post(`${url}/authenticate`,
-        { accountID }
-    );
+  // returns promise to object
+  // {
+  //     "accountID"
+  //     "accountType"
+  //     "helped"
+  // }
+  return axios.post(`${url}/authenticate`, {accountID});
 }
 
 async function createAccount(accountID, accountName, accountType) {
-    // returns promise to object
-    // {
-    //     "accountID"
-    //     "accountType"
-    //     "helped"
-    // }
-    return axios.post(`${url}/account`,
-        { accountID, accountName, accountType }
-    );
+  // returns promise to object
+  // {
+  //     "accountID"
+  //     "accountType"
+  //     "helped"
+  // }
+  return axios.post(`${url}/account`, {accountID, accountName, accountType});
 }
 
 async function getVendors() {
-    // returns promise to object containing an array
-    // {
-    //     "vendors": [
-    //         {
-    //             "vendorID"
-    //             "vendorName"
-    //         }
-    //     ]
-    // }
-    return axios.get(`${url}/vendor`);
+  // returns promise to object containing an array
+  // {
+  //     "vendors": [
+  //         {
+  //             "vendorID"
+  //             "vendorName"
+  //         }
+  //     ]
+  // }
+  return axios.get(`${url}/vendor`);
 }
 
 async function createVendor(vendorID, vendorName) {
-    // returns promise to object
-    // {
-    //     "vendorID"
-    //     "vendorName"
-    // }
-    return axios.post(`${url}/vendor`,
-        {
-            vendorID,
-            vendorName
-        }
-    );
+  // returns promise to object
+  // {
+  //     "vendorID"
+  //     "vendorName"
+  // }
+  return axios.post(`${url}/vendor`, {
+    vendorID,
+    vendorName,
+  });
 }
 
 async function updateVendor(vendorID, vendorName) {
-    // returns promise to object
-    // {
-    //     "vendorID"
-    //     "vendorName"
-    // }
-    return axios.put(`${url}/vendor`,
-        {
-            vendorID,
-            vendorName
-        });
+  // returns promise to object
+  // {
+  //     "vendorID"
+  //     "vendorName"
+  // }
+  return axios.put(`${url}/vendor`, {
+    vendorID,
+    vendorName,
+  });
 }
 
 async function deleteVendor(vendorID) {
-    // returns promise to object
-    // {
-    //     "vendorID"
-    // }
-    return axios.delete(`${url}/vendor`,
-        {
-            vendorID
-        });
+  // returns promise to object
+  // {
+  //     "vendorID"
+  // }
+  return axios.delete(`${url}/vendor`, {
+    vendorID,
+  });
 }
 
 async function getAccounts(accountID) {
-    // returns promise to object containing an array
-    // {
-    //     "accounts": [
-    //         {
-    //             "accountID"
-    //             "accountName"
-    //             "accountType"
-    //         }
-    //     ]
-    // }
-    return axios.get(`${url}/account`,
-        {
-            accountID
-        });
+  // returns promise to object containing an array
+  // {
+  //     "accounts": [
+  //         {
+  //             "accountID"
+  //             "accountName"
+  //             "accountType"
+  //         }
+  //     ]
+  // }
+  return axios.get(`${url}/account`, {
+    accountID,
+  });
 }
 
 async function getItems(vendorID) {
-    // returns promise to object containing an array
-    // {
-    //     "items": [
-    //         {
-    //             "vendorID"
-    //             "itemID"
-    //             "quantityAvailable"
-    //         }
-    //     ]
-    // }
-    return axios.get(`${url}/item`,
-        {
-            vendorID
-        });
+  // returns promise to object containing an array
+  // {
+  //     "items": [
+  //         {
+  //             "vendorID"
+  //             "itemID"
+  //             "quantityAvailable"
+  //         }
+  //     ]
+  // }
+  return axios.get(`${url}/item`, {
+    vendorID,
+  });
 }
 
 async function getValidationCode(accountID, vendorID, itemID, modeID) {
-    return axios.get(`${url}/validate`,
-        {
-            accountID,
-            vendorID,
-            itemID,
-            modeID
-        });
+  return axios.get(`${url}/validate`, {
+    accountID,
+    vendorID,
+    itemID,
+    modeID,
+  });
 }
 
 async function verifyValidationCode(validationCode) {
-    return axios.get(`${url}/validate`,
-        {
-            validationCode
-        });
+  return axios.get(`${url}/validate`, {
+    validationCode,
+  });
 }
 
-async function validateTransaction(accountID, vendorID, itemID, modeID, validationCode) {
-    return axios.get(`${url}/validate`,
-        {
-            accountID,
-            vendorID,
-            itemID,
-            modeID,
-            validationCode
-        });
+async function validateTransaction(
+  accountID,
+  vendorID,
+  itemID,
+  modeID,
+  validationCode,
+) {
+  return axios.get(`${url}/validate`, {
+    accountID,
+    vendorID,
+    itemID,
+    modeID,
+    validationCode,
+  });
 }
 
-let api = {}
+let api = {};
 api.login = login;
 api.createAccount = createAccount;
 api.getVendors = getVendors;
@@ -153,4 +147,4 @@ api.getValidationCode = getValidationCode;
 api.verifyValidationCode = verifyValidationCode;
 api.validateTransaction = validateTransaction;
 
-export { api };
+export {api};
