@@ -40,17 +40,18 @@ export default class Home extends Component {
     this.state = {
       renderCamera: false,
       search: '',
-      vendorID: '',
-      vendorName: '',
+      vendors: [],
     };
   }
 
   componentDidMount() {
     api.getItems('titanic').then(res => {
-      this.setState({
-        vendorID: res.data.vendorID,
-        vendorName: res.data.vendorName,
-      });
+      let vendors = [];
+      let idx = 0;
+      for (vend in res.data) {
+        vendors.push({vendorID: vend.vendorID, vendorName: vend.vendorName});
+      }
+      this.setState({vendors: vendors});
     });
   }
 
@@ -127,7 +128,7 @@ export default class Home extends Component {
 
           {data.map((d, idx) => (
             <Item
-              key={idx}
+              key={this.state.ve}
               name={d.name}
               image={d.image}
               itemid={d.itemId}
