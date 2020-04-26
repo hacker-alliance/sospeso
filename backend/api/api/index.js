@@ -24,7 +24,14 @@ async function getAccounts() {
     let response = {};
     let records = await authdb.list({ include_docs: true });
     console.log(records.rows);
-    response.accounts = records.rows;
+    response.accounts = [];
+    for (row of records.rows) {
+        let a = {}
+        a.accountID = row.id;
+        a.accountName = row.doc.accountName;
+        a.accountType = row.doc.accountType;
+        response.accounts.push(a);
+    }
     return response;
 }
 async function getAccount(req) {
@@ -32,6 +39,8 @@ async function getAccount(req) {
     let record = await authdb.get(req.body.accountID);
     console.log(record);
     response.accountID = record._id;
+    response.accountName = record.accountName;
+    response.accountType = record.accountType;
     console.log(response);
     return response;
 }
@@ -41,11 +50,13 @@ async function createAccount(req) {
 
     let record = await authdb.insert({
         _id: req.body.accountID,
-        name: req.body.name,
+        accountName: req.body.accountName,
         accountType: req.body.accountType
     });
     console.log(record);
     response.accountID = record.id;
+    response.accountName = req.body.accountName;
+    response.accountType = req.body.accountType;
     return response;
 }
 
@@ -53,11 +64,11 @@ async function updateAccount(req) {
     let response = {};
     let findRecord = await authdb.get(req.body.accountID);
     console.log(findRecord);
-    findRecord.name = req.body.name;
+    findRecord.accountName = req.body.accountName;
 
     let record = await authdb.insert(findRecord);
     response.accountID = record.id;
-    response.name = findRecord.name
+    response.accountName = findRecord.accountName
     console.log(record);
     return response;
 }
@@ -123,7 +134,14 @@ async function getVendors() {
     let response = {};
     let records = await vendordb.list({ include_docs: true });
     console.log(records.rows);
-    response.vendors = records.rows;
+    response.vendors = [];
+    for (row of records.rows) {
+        let v = {}
+        v.vendorID = row.id;
+        v.vendorName = row.doc.vendorName;
+        response.vendors.push(v);
+    }
+
     return response;
 }
 
@@ -204,6 +222,16 @@ async function getItems(req) {
     let records = await itemdb.partitionedList(req.body.vendorID, { include_docs: true });
     console.log(records.rows);
     response.items = records.rows;
+    response.items = [];
+
+    for (row of records.rows) {
+        let i = {}
+        i.vendorID = row.doc.vendorID;
+        i.itemID = row.doc.itemID;
+        i.quantityAvailable = row.doc.quantityAvailable;
+        response.items.push(i);
+    }
+
     return response;
 }
 
@@ -218,9 +246,10 @@ async function createItem(req) {
         quantityAvailable: 0
     });
     console.log(record);
-    response.itemID = record._id;
-    response.itemName = record.itemName;
-    response.quantityAvailable = record.quantityAvailable;
+    response.itemID = req.body.itemID;
+    response.vendorID = req.body.vendorID;
+    response.itemName = req.body.itemName;
+    response.quantityAvailable = 0;
     return response;
 }
 
