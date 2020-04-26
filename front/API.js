@@ -112,12 +112,7 @@ async function getValidationCode(accountID, vendorID, itemID, modeID) {
   //   "modeID"
   //   "validationCode"
   // }
-  return axios.get(`${url} / validate`, {
-    accountID,
-    vendorID,
-    itemID,
-    modeID,
-  });
+  return axios.get(`${url}/validate?accountID=${accountID}&vendorID=${vendorID}&modeID=${modeID}`);
 }
 
 async function verifyValidationCode(validationCode) {
@@ -129,9 +124,7 @@ async function verifyValidationCode(validationCode) {
   //   "modeID"
   //   "validationCode"
   // }
-  return axios.get(`${url} / validate`, {
-    validationCode,
-  });
+  return axios.get(`${url}/validate?validationCode=${validationCode}`);
 }
 
 // returns promise to object
@@ -149,7 +142,7 @@ async function validateTransaction(
   modeID,
   validationCode,
 ) {
-  return axios.get(`${url} / validate`, {
+  return axios.get(`${url}/validate?accountID=${accountID}&vendorID=${vendorID}&itemID=${itemID}&validationCode${validationCode}`, {
     accountID,
     vendorID,
     itemID,

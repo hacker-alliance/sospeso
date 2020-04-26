@@ -35,7 +35,7 @@ async function getAccounts() {
 }
 async function getAccount(req) {
     let response = {};
-    let record = await authdb.get(req.body.accountID);
+    let record = await authdb.get(req.query.accountID);
     console.log(record);
     response.accountID = record._id;
     response.accountName = record.accountName;
@@ -93,7 +93,7 @@ async function account(req, res) {
     let responsePromise = {};
     switch (req.method) {
         case 'GET':
-            if (req.body.accountID) {
+            if (req.query.accountID) {
                 responsePromise = getAccount(req);
             }
             else {
@@ -326,10 +326,10 @@ function decode(code) {
 }
 async function generate(req) {
     let response = {};
-    response.accountID = req.body.accountID;
-    response.vendorID = req.body.vendorID;
-    response.itemID = req.body.itemID;
-    response.modeID = req.body.modeID;
+    response.accountID = req.query.accountID;
+    response.vendorID = req.query.vendorID;
+    response.itemID = req.query.itemID;
+    response.modeID = req.query.modeID;
     let data = response;
     response.validationCode = encode(data);
     return response;
@@ -337,7 +337,7 @@ async function generate(req) {
 
 async function verify(req) {
     let response = {};
-    let data = decode(req.body.validationCode);
+    let data = decode(req.query.validationCode);
 
     response.accountID = data.accountID;
     response.vendorID = data.vendorID;
@@ -349,8 +349,8 @@ async function verify(req) {
 
 async function apply(req) {
     let response = {};
-    if (req.body.modeID === 'donate') {
-        let findAccount = await authdb.get(req.body.accountID);
+    if (req.query.modeID === 'donate') {
+        let findAccount = await authdb.get(req.query.accountID);
         console.log(findAccount);
         findAccount.helped = findAccount.helped + 1;
 
@@ -360,7 +360,7 @@ async function apply(req) {
         response.accountName = findAccount.accountName;
         response.helped = findAccount.helped;
 
-        let findItem = await itemdb.get(`${req.body.vendorID}:${req.body.itemID}`);
+        let findItem = await itemdb.get(`${req.body.vendorID}:${req.query.itemID}`);
         console.log(findItem);
         findItem.quantityAvailable = findItem.quantityAvailable + 1;
 
@@ -370,8 +370,8 @@ async function apply(req) {
         response.vendorID = findItem.vendorID;
         response.quantityAvailable = findItem.quantityAvailable;
     }
-    else if (req.body.modeID === 'redeem') {
-        let findItem = await itemdb.get(`${req.body.vendorID}:${req.body.itemID}`);
+    else if (req.query.modeID === 'redeem') {
+        let findItem = await itemdb.get(`${req.query.vendorID}:${req.query.itemID}`);
         console.log(findItem);
         findItem.quantityAvailable = findItem.quantityAvailable - 1;
 
@@ -388,7 +388,7 @@ async function validate(req, res) {
     let responsePromise = {};
     switch (req.method) {
         case 'GET':
-            if (req.body.validationCode) {
+            if (req.query.validationCode) {
                 responsePromise = verify(req);
             }
             else {
