@@ -303,8 +303,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'transparent',
-    height: Dimensions.get('window').width,
-    width: Dimensions.get('window').width / 2,
+    height: Dimensions.get('window').height / 6,
+    width: Dimensions.get('window').width / 1.5,
+    left: Dimensions.get('window').width / 6,
+    top: Dimensions.get('window').height / 5,
+    // borderColor: 'black',
+    // borderWidth: 3,
   },
 
   rectangleContainer: {

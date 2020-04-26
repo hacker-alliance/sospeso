@@ -26,7 +26,7 @@ import coffee4 from '../images/coffee4.jpg';
 
 // If CSS is fucked up related to the camera in here, you will prolly modify the camera css in QRScanner
 
-export default class Pay extends Component {
+export default class Redeem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -82,7 +82,7 @@ export default class Pay extends Component {
               marginLeft: '16%',
               marginTop: '3%',
             }}>
-            Buy | Coffee x 2
+            Redeem | Coffee
           </Text>
           <Text
             style={{marginLeft: '16%', marginTop: '3%', fontWeight: 'bold'}}>

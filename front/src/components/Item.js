@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
     height: '100%',
     opacity: 0.8,
     borderRadius: 5,
-    right: '64%',
+    right: '60%',
+    backgroundColor: '#aeaeae',
   },
   button2: {
     width: '70%',
@@ -83,5 +84,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     // right: '100%',
     right: '111%',
+    backgroundColor: '#ffbe42',
   },
 });
