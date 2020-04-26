@@ -9,7 +9,7 @@ export default class Profile extends Component {
   render() {
     return (
       <View>
-        <Text>Login</Text>
+        <Text>Profile</Text>
       </View>
     );
   }

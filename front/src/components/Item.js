@@ -34,8 +34,20 @@ export default class Item extends Component {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Button title="Redeem" buttonStyle={styles.button1} />
-            <Button title="Purchase" buttonStyle={styles.button2} />
+            <Button
+              title="Redeem"
+              buttonStyle={styles.button1}
+              onPress={() => {
+                this.props.goto('Redeem');
+              }}
+            />
+            <Button
+              title="Purchase"
+              buttonStyle={styles.button2}
+              onPress={() => {
+                this.props.goto('Pay');
+              }}
+            />
           </View>
         )}
       </TouchableOpacity>

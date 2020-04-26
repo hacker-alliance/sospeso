@@ -8,27 +8,33 @@ import Home from './src/screens/Home';
 import Login from './src/screens/Login';
 import Register from './src/screens/Register';
 import Pay from './src/screens/Pay';
-import Navbar from './src/components/Navbar';
-import StackNavigator from './src/utils/StackNavigator';
-import TabNavigator from './src/utils/TabNavigator';
+import Redeem from './src/screens/Redeem';
+import Profile from './src/screens/Profile';
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
-// const StackNavigator = ({navigation}) => {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen name="Home" component={Home} />
-//       <Stack.Screen name="Login" component={Login} />
-//       <Stack.Screen name="Register" component={Register} />
-//       <Stack.Screen name="Pay" component={Pay} />
-//     </Stack.Navigator>
-//   );
-// };
 export default class App extends Component {
   render() {
+    const HomePageTabs = () => (
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={Home} />
+        {/* <Tab.Screen name="Dank" component={Login} /> */}
+        {/* <Tab.Screen name="Memes" component={Register} /> */}
+        <Tab.Screen name="Pay" component={Pay} />
+      </Tab.Navigator>
+    );
+
     return (
       <NavigationContainer>
-        <TabNavigator />
+        <Stack.Navigator initialRouteName="Login" headerMode={false}>
+          <Stack.Screen name="Home" component={HomePageTabs} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="Redeem" component={Redeem} />
+          <Stack.Screen name="Pay" component={Pay} />
+          <Stack.Screen name="Profile" component={Profile} />
+        </Stack.Navigator>
       </NavigationContainer>
     );
   }

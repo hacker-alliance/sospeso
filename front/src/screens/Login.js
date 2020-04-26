@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Button, Alert} from 'react-native';
+import {StyleSheet, Text, View, Alert} from 'react-native';
+import {Button} from 'react-native-elements';
 
 export default class Login extends Component {
   constructor(props) {
@@ -10,6 +11,10 @@ export default class Login extends Component {
     return (
       <View>
         <Text>Login</Text>
+        <Button
+          title="gotohome"
+          onPress={() => this.props.navigation.navigate('Home')}
+        />
       </View>
     );
   }

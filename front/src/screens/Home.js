@@ -25,6 +25,13 @@ import coffee4 from '../images/coffee4.jpg';
 
 import QRScanner from '../components/QRScanner';
 
+const data = [
+  {itemid: 1, itemName: 'coffee1', image: coffee1, quantityAvailable: 4},
+  {itemid: 2, itemName: 'coffee2', image: coffee2, quantityAvailable: 9},
+  {itemid: 3, itemName: 'coffee3', image: coffee3, quantityAvailable: 7},
+  {itemid: 4, itemName: 'coffee4', image: coffee4, quantityAvailable: 12},
+];
+
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -97,7 +104,17 @@ export default class Home extends Component {
               }}
             />
           </View>
-          <Item image={coffee1} />
+
+          {data.map((d, idx) => (
+            <Item
+              key={idx}
+              name={d.name}
+              image={d.image}
+              itemid={d.itemId}
+              goto={loc => this.props.navigation.navigate(loc, d)}
+            />
+          ))}
+          {/* <Item image={coffee1} />
           <Item image={coffee2} />
           <Item image={coffee3} />
           <Item image={coffee4} />
@@ -107,7 +124,7 @@ export default class Home extends Component {
           <Item image={coffee4} />
           <Item image={coffee2} />
           <Item image={coffee3} />
-          <Item image={coffee4} />
+          <Item image={coffee4} /> */}
           {/* <Item image={coffee2} />
           <Item image={coffee3} />
           <Item image={coffee4} /> */}
